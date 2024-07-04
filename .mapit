@@ -1,0 +1,9 @@
+{
+    "DJANGO_SECRET_KEY": "some long random string",
+    "MAPIT_DB_NAME": "mapit-postcodes",
+    "MAPIT_DB_USER": "admin",
+    "MAPIT_DB_PASS": "1234",
+    "MAPIT_DB_HOST": "localhost",
+    "MAPIT_DB_PORT": "5432",
+    "COUNTRY": "GB"
+}
