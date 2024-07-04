@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 PARENT_DIR = os.path.dirname(BASE_DIR)
 
 try:
-    with open(os.path.join(os.path.expanduser('~'), '.mapit')) as f:
+    with open(os.path.join(os.path.expanduser('~'), 'Documents/postcodes-mapit/.mapit')) as f:
         config = json.load(f)
     STATIC_URL = '/static/'
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'

@@ -94,6 +94,7 @@ class Command(BaseCommand):
         if options["force_delete"]:
             NSULRow.objects.all().delete()
             VoronoiRegion.objects.all().delete()
+            return
         else:
             existing_nsul_row = NSULRow.objects.count()
             existing_voronoi_region = VoronoiRegion.objects.count()
@@ -105,7 +106,7 @@ class Command(BaseCommand):
                 print(
                     f"There are {existing_voronoi_region} rows already in the mapit_postcodes_voronoiregion table"
                 )
-            if existing_nsul_row or existing_voronoi_region:
+            if existing_voronoi_region:
                 print(
                     "You must delete these rows yourself, or re-run with -f to get the script to do it."
                 )
@@ -184,12 +185,13 @@ class Command(BaseCommand):
 
             with open(csv_filename) as fp:
                 reader = csv.DictReader(fp)
+                reader.fieldnames = [name.lower() for name in reader.fieldnames]
                 for i, row in enumerate(reader):
                     if i > 0 and (i % 100000 == 0):
                         print("{0} postcodes processed".format(i))
                     if i > 0 and (i % BATCH_SIZE == 0):
                         bulk_create_batch_of_new_row_objects()
-                    pc = row[COLUMN_POSTCODE]
+                    pc = row[COLUMN_POSTCODE].strip()
                     if required_pc_prefix and not pc.startswith(required_pc_prefix):
                         continue
                     # Exclude Girobank postcodes:
